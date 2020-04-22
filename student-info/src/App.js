@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import StudentInformation from "./components/StudentInformation";
 import AddStudentInformation from "./components/AddStudentInformation";
-import studentInfo from "./shared/studentData";
+import { saveStudentInformation } from './actions/saveStudentInformation';
+import { deleteStudentInformation } from './actions/deleteStudentInformation';
+import formatPhoneNumber from './shared/formatPhoneNumber';
 import Header from "./components/Header";
 import './App.css';
 
@@ -9,16 +13,11 @@ export class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       isOpen: false,
-      studentInformation: {
-        id: this.UUIDGenerater(),
-      }
+      studentInformation: {},
+      isDisabled: true
     };
-  };
-
-  componentDidMount() {
-    console.log("student Data", studentInfo);
   };
 
   UUIDGenerater = () => {
@@ -29,22 +28,34 @@ export class App extends React.Component {
   };
 
   handleOnOpen = () => {
-   this.setState({isOpen: true})
+    this.setState({ isOpen: true });
   };
 
+  handleOnClose = () => {
+    this.setState({ isOpen: false });
+  };
+  
   handleOnDelete = (info) => {
-    console.log(" Delete Action", info);
+    this.props.deleteStudentInformation(info);
+  };
+
+  enableSaveButton = ()=>{
+    const { studentInformation } = this.state;
+    if((studentInformation.firstName !== undefined && studentInformation.lastName !== undefined && studentInformation.city !==undefined && studentInformation.gpa !== undefined && studentInformation.phoneNumber !== undefined && studentInformation.streetName !== undefined)){
+      this.setState({ isDisabled: false});
+    }
   };
 
   handleOnChange = (e) => {
     let studentInformation = Object.assign({}, this.state.studentInformation);
-    studentInformation[e.target.name] =  e.target.value
-    this.setState({ studentInformation }, ()=>{console.log(" after change", this.state.studentInformation)})
+    e.target.name === "phoneNumber" ? studentInformation[e.target.name] = formatPhoneNumber(e.target.value) : studentInformation[e.target.name] = e.target.value;
+    this.setState({ studentInformation }, () => {this.enableSaveButton()});
   }
 
   handleOnSave = () => {
-    console.log("Helo on Save", this.state.studentInformation)
-    //call an Action function to save user Information
+    let studentInformation = Object.assign({}, this.state.studentInformation);
+    studentInformation.id = this.UUIDGenerater();
+    this.setState({ isDisabled: true, isOpen: false, studentInformation}, ()=>{this.props.saveStudentInformation(this.state.studentInformation)});
   }
 
   navigateToDetails = (information) => {
@@ -57,14 +68,15 @@ export class App extends React.Component {
   render() {
     return (
       <div>
-        <Header name="University"/>
+        <Header name="University" />
         {this.state.isOpen ? <AddStudentInformation
           {...this.state}
           handleOnChange={this.handleOnChange}
           handleOnSave={this.handleOnSave}
+          handleOnClose={this.handleOnClose}
         /> : null}
         <StudentInformation
-          studentInfo={studentInfo}
+          studentInfo={this.props.studentInfo}
           handleOnDelete={this.handleOnDelete}
           handleOnOpen={this.handleOnOpen}
           navigateToDetails={this.navigateToDetails}
@@ -74,4 +86,20 @@ export class App extends React.Component {
   }
 }
 
-export default App;
+
+export const mapStateToProps = state => ({
+  studentInfo:  state.saveStudentInformationReducer.studentInfo || state.saveStudentInformationReducer
+});
+
+export const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      saveStudentInformation,
+      deleteStudentInformation
+    },
+    dispatch,
+  );
+
+export default connect(
+  mapStateToProps, mapDispatchToProps,
+)(App);

@@ -29,9 +29,8 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const StudentInformation = (props) => (
-  console.log("in student infor", props),
   <>
-    <Button variant="contained" color="primary" onClick={props.handleOnOpen}>Add Student</Button>
+    <Button style={{float: "right", marginBottom: "5px"}} variant="contained" color="primary" onClick={props.handleOnOpen}>Add Student</Button>
     <TableContainer component={Paper}>
       <Table aria-label="student-inf0 table">
         <TableHead>
