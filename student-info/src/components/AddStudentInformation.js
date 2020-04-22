@@ -6,8 +6,6 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-
 
 const AddStudentInformation = (props) => (
   <>
@@ -30,10 +28,10 @@ const AddStudentInformation = (props) => (
             <TextField name="city" label="City" variant="outlined" onChange={props.handleOnChange} />
           </Grid>
           <Grid item xs={6} sm={6}>
-            <TextField name="phoneNumber" inputProps={{maxLength: 10}} maxLength="2" label="Phone Number" variant="outlined" onChange={props.handleOnChange} />
+            <TextField name="phoneNumber" value = {props.studentInformation.phoneNumber} inputProps={{maxLength: 10}} label="Phone Number" variant="outlined" onChange={props.handleOnChange}/>
           </Grid>
           <Grid item xs={6} sm={6}>
-            <TextField name="gpa" type = "number" label="GPA" variant="outlined" onChange={props.handleOnChange} />
+            <TextField name="gpa" label="GPA" inputProps={{maxLength: 3}} variant="outlined" onChange={props.handleOnChange}/>
           </Grid>
         </Grid>
       </MuiDialogContent>

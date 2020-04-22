@@ -5,6 +5,12 @@ import Typography from '@material-ui/core/Typography'
 import avatar from '../resource/images/avatarImage.png';
 import Header from './Header';
 
+const StyledTypography = withStyles((theme) => ({
+  root: {
+    fontFamily: "Lato"
+  },
+}))(Typography);
+
 const StudentDetails = (props) => {
   const { state } = props.location;
   return (
@@ -14,26 +20,26 @@ const StudentDetails = (props) => {
         <Grid container spacing={3}>
           <Grid item xs={6} sm={1} />
           <Grid item xs={6} sm={1}>
-            <img style={{width: "200px"}} src={avatar} alt="avatar" />
+            <img style={{ width: "200px" }} src={avatar} alt="avatar" />
           </Grid>
           <Grid item xs={6} sm={2}>
-            <Typography>First Name :</Typography>
-            <Typography>Last Name :</Typography>
-            <Typography>Street Name :</Typography>
-            <Typography>City :</Typography>
-            <Typography>Phone Number:</Typography>
-            <Typography>GPA :</Typography>
+            <StyledTypography>First Name :</StyledTypography>
+            <StyledTypography>Last Name :</StyledTypography>
+            <StyledTypography>Street Name :</StyledTypography>
+            <StyledTypography>City :</StyledTypography>
+            <StyledTypography>Phone Number:</StyledTypography>
+            <StyledTypography>GPA :</StyledTypography>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Typography>{state.firstName}</Typography>
-            <Typography>{state.lastName}</Typography>
-            <Typography>{state.streetName}</Typography>
-            <Typography>{state.city}</Typography>
-            <Typography>{state.phoneNumber}</Typography>
-            <Typography>{state.gpa}</Typography>
+            <StyledTypography>{state.firstName}</StyledTypography>
+            <StyledTypography>{state.lastName}</StyledTypography>
+            <StyledTypography>{state.streetName}</StyledTypography>
+            <StyledTypography>{state.city}</StyledTypography>
+            <StyledTypography>{state.phoneNumber}</StyledTypography>
+            <StyledTypography>{state.gpa}</StyledTypography>
           </Grid>
         </Grid>
-      </div> : <Typography style={{fontFamily: "Lato", fontSize: "25px", fontWeight: 'bold', textAlign:"center", color:"red"}}>Student Record Not Found</Typography>}
+      </div> : <Typography style={{ fontFamily: "Lato", fontSize: "25px", fontWeight: 'bold', textAlign: "center", color: "red" }}>Student Record Not Found</Typography>}
     </>
   );
 }

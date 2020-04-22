@@ -14,23 +14,25 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontFamily: 'Lato'
   },
   body: {
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: 'Lato'
   },
 }))(TableCell);
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: theme.palette.background.default
     },
   },
 }))(TableRow);
 
 const StudentInformation = (props) => (
   <>
-    <Button style={{float: "right", marginBottom: "5px"}} variant="contained" color="primary" onClick={props.handleOnOpen}>Add Student</Button>
+    <Button style={{float: "right", marginBottom: "5px",  fontFamily: 'Lato'}} variant="contained" color="primary" onClick={props.handleOnOpen}>Add Student</Button>
     <TableContainer component={Paper}>
       <Table aria-label="student-inf0 table">
         <TableHead>
@@ -45,13 +47,13 @@ const StudentInformation = (props) => (
         <TableBody>
           {props.studentInfo.map((row, index) => (
             <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row" onClick={ () => {props.navigateToDetails(row)}}>
+              <StyledTableCell   style={{cursor: 'pointer'}} component="th" scope="row" onClick={ () => {props.navigateToDetails(row)}}>
                 {row.firstName}
               </StyledTableCell>
               <StyledTableCell align="right">{row.lastName}</StyledTableCell>
               <StyledTableCell align="right">{row.phoneNumber}</StyledTableCell>
               <StyledTableCell align="right">{row.gpa}</StyledTableCell>
-              <StyledTableCell align="right"> <DeleteRoundedIcon onClick={() => { props.handleOnDelete(row) }} /></StyledTableCell>
+              <StyledTableCell align="right"> <DeleteRoundedIcon  style={{cursor: 'pointer'}} onClick={() => { props.handleOnDelete(row) }} /></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -28,11 +28,11 @@ export class App extends React.Component {
   };
 
   handleOnOpen = () => {
-    this.setState({ isOpen: true });
+    this.setState({ isOpen: true,  studentInformation: {}});
   };
 
   handleOnClose = () => {
-    this.setState({ isOpen: false });
+    this.setState({ isOpen: false, isDisabled: true });
   };
   
   handleOnDelete = (info) => {
